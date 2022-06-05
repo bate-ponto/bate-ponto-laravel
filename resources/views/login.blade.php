@@ -8,8 +8,8 @@
         </div>
 
         <form method="POST" action="{{ route('authentication') }}"
-            class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3">
-
+            class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3"
+        >
             @csrf
 
             <div class="flex flex-col">
@@ -17,25 +17,26 @@
                 <input type="text" name="email" id="email" placeholder="Place your email"
                     class="py-0.5 px-1 rounded-sm" />
 
-                @error('email')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                <x-error name="email" />
             </div>
+
             <div class="flex flex-col">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Place your password"
                     class="py-0.5 px-1 rounded-sm" />
 
-                @error('password')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                <x-error name="password" />
             </div>
 
             <div class="flex justify-center my-2">
-                <a href="{{ route('register') }}" class="text-sm text-blue-600">Don't have an account?</a>
+                <a href="{{ route('register') }}" class="text-sm text-blue-600">
+                    Don't have an account?
+                </a>
             </div>
 
-            <button type="submit" class="px-2 py-1 bg-blue-50 border border-blue-800 hover:bg-blue-600">Submit</button>
+            <button type="submit" class="px-2 py-1 bg-blue-50 border border-blue-800 hover:bg-blue-600">
+                Submit
+            </button>
         </form>
     </div>
 </x-layouts.app>
