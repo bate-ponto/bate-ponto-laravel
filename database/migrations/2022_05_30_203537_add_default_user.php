@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\{Hash, Schema};
+use Illuminate\Support\Facades\Hash;
 
 return new class () extends Migration {
     public function up(): void
@@ -10,6 +10,7 @@ return new class () extends Migration {
         User::create([
             'name'     => 'User',
             'email'    => 'admin@admin.com',
+            'username' => 'admin',
             'password' => Hash::make('password'),
         ]);
     }
@@ -19,6 +20,7 @@ return new class () extends Migration {
         User::where([
             'name'     => 'User',
             'email'    => 'admin@admin.com',
+            'username' => 'admin',
             'password' => Hash::make('password'),
         ])->delete();
     }
