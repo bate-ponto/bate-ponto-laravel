@@ -18,7 +18,7 @@ class TimeRegisterCard extends Component
         'changeStatus' => '$refresh',
     ];
 
-    public function updatedTimeRegisterDescription(?string $value): void
+    public function updatedTimeRegisterDescription(): void
     {
         $this->timeRegister->save();
     }

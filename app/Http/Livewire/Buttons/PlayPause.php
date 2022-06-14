@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Buttons;
 
 use App\Models\TimeRegister;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -12,17 +13,18 @@ class PlayPause extends Component
 
     public bool $isPlaying = false;
 
+    protected $listeners = [
+        'date::changed' => 'dateChanged',
+    ];
+
     public function mount(): void
     {
-        $this->timeRegister = TimeRegister::query()
-            ->fromUser()
-            ->whereNull('end_time')
-            ->latest()
-            ->first();
+        $this->isPlaying = $this->getTimeRegisterStatus(today());
+    }
 
-        if ($this->timeRegister) {
-            $this->isPlaying = true;
-        }
+    public function dateChanged(string $date): void
+    {
+        $this->isPlaying = $this->getTimeRegisterStatus(Carbon::parse($date));
     }
 
     public function toggle(): void
@@ -31,7 +33,7 @@ class PlayPause extends Component
 
         if ($this->isPlaying) {
             $this->timeRegister = TimeRegister::create([
-                'user_id' => auth()->id(),
+                'user_id'    => auth()->id(),
                 'start_time' => now(),
             ]);
         } else {
@@ -41,6 +43,22 @@ class PlayPause extends Component
         }
 
         $this->emit('changeStatus');
+    }
+
+    private function getTimeRegisterStatus(Carbon $date): bool
+    {
+        $this->timeRegister = TimeRegister::query()
+            ->fromUser()
+            ->fromDate($date)
+            ->whereNull('end_time')
+            ->latest()
+            ->first();
+
+        if ($this->timeRegister) {
+            return true;
+        }
+
+        return false;
     }
 
     public function render(): View

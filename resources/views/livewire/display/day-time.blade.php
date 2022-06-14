@@ -1,3 +1,6 @@
-<div class="flex items-center text-blue-200 text-lg">
-    <span>{{ $timeMade }}</span>
+<div
+    wire:poll
+    class="flex items-center text-blue-200 text-lg"
+>
+    <span>{{ convertNumberIntoTimeFormat($timeMade) }}</span>
 </div>

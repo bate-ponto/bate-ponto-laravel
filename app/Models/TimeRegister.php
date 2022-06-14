@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Builder, Model};
 
 class TimeRegister extends Model
 {
@@ -15,13 +15,13 @@ class TimeRegister extends Model
         'start_time',
         'end_time',
         'duration',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [
-        'start_time'    => 'datetime',
-        'end_time'      => 'datetime',
-        'duration'      => 'datetime',
+        'start_time' => 'datetime',
+        'end_time'   => 'datetime',
+        'duration'   => 'datetime',
     ];
 
     public function scopeFromUser(Builder $query): Builder
@@ -32,5 +32,10 @@ class TimeRegister extends Model
     public function scopeFromToday(Builder $query): Builder
     {
         return $query->whereDate('start_time', today());
+    }
+
+    public function scopeFromDate(Builder $query, Carbon $date): Builder
+    {
+        return $query->whereDate('start_time', $date);
     }
 }
