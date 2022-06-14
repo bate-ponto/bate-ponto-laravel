@@ -10,6 +10,8 @@
     <title>{{ $title ?? config('app.name') }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <script src="{{ asset('js/app.js') }}"></script>
 
     @livewireStyles
