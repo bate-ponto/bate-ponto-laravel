@@ -1,7 +1,7 @@
 @props(['name'])
 
 <div
-    class="relative"
+    class="relative rounded-sm"
     x-data="{ passwordShow: true }"
 >
     <input :type="passwordShow ? 'password' : 'text'"
@@ -12,7 +12,7 @@
         ])}}
     >
 
-    <div class="absolute inset-y-0 right-1 h-5 w-5 flex items-center text-sm">
+    <div class="absolute inset-y-0 right-1 h-5 w-5 flex items-center text-sm text-gray-500">
         <svg
             x-show="passwordShow"
             @click="passwordShow = !passwordShow"

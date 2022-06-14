@@ -10,7 +10,10 @@
         </svg>
     </div>
 
-    <div class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3">
+    <form
+        wire:submit.prevent="submit"
+        class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3"
+    >
         <div class="flex flex-col">
             <label for="username">Email Or Username</label>
             <input
@@ -58,5 +61,5 @@
         >
             Submit
         </button>
-    </div>
+    </form>
 </div>

@@ -3,7 +3,10 @@
 @endslot
 
 <div class="bg-blue-500 flex relative w-full justify-center items-center">
-    <div class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3">
+    <form
+        wire:submit.prevent="submit"
+        class="bg-blue-200 flex flex-col h-fit w-fit rounded-sm p-10 gap-3"
+    >
         <div class="flex flex-col">
             <label for="name">Name</label>
             <input
@@ -70,5 +73,5 @@
         >
             Submit
         </button>
-    </div>
+    </form>
 </div>
