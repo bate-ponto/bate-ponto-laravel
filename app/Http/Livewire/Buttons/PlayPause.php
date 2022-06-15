@@ -11,6 +11,8 @@ class PlayPause extends Component
 {
     public ?TimeRegister $timeRegister = null;
 
+    public Carbon $date;
+
     public bool $isPlaying = false;
 
     protected $listeners = [
@@ -19,12 +21,16 @@ class PlayPause extends Component
 
     public function mount(): void
     {
-        $this->isPlaying = $this->getTimeRegisterStatus(today());
+        $this->date = today();
+
+        $this->isPlaying = $this->getTimeRegisterStatus();
     }
 
     public function dateChanged(string $date): void
     {
-        $this->isPlaying = $this->getTimeRegisterStatus(Carbon::parse($date));
+        $this->date = Carbon::parse($date);
+
+        $this->isPlaying = $this->getTimeRegisterStatus();
     }
 
     public function toggle(): void
@@ -45,20 +51,17 @@ class PlayPause extends Component
         $this->emit('changeStatus');
     }
 
-    private function getTimeRegisterStatus(Carbon $date): bool
+    private function getTimeRegisterStatus(): bool
     {
         $this->timeRegister = TimeRegister::query()
             ->fromUser()
-            ->fromDate($date)
+            ->fromDate($this->date)
             ->whereNull('end_time')
+            ->orderBy('start_time')
             ->latest()
             ->first();
 
-        if ($this->timeRegister) {
-            return true;
-        }
-
-        return false;
+        return isset($this->timeRegister);
     }
 
     public function render(): View

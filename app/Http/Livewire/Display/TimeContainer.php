@@ -4,36 +4,68 @@ namespace App\Http\Livewire\Display;
 
 use App\Models\TimeRegister;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class TimeContainer extends Component
 {
-    public Collection $timeRegisters;
+    public array $timeRegisters;
+
+    public Carbon $date;
 
     protected $listeners = [
-        'changeStatus'  => '$refresh',
+        'changeStatus'  => 'setTimeRegisters',
         'date::changed' => 'dateChanged',
     ];
 
     public function mount(): void
     {
-        $this->timeRegisters = $this->getTimeRegisters(today());
+        $this->date = today();
+
+        $this->setTimeRegisters();
+    }
+
+    public function updatedTimeRegisters(string $value, string $key): void
+    {
+        [$id, $field] = explode('.', $key);
+
+        if ($field === 'description') {
+            TimeRegister::where('id', $id)->update([
+                'description' => $value,
+            ]);
+
+            $this->emitSelf('$refresh');
+        }
     }
 
     public function dateChanged(string $date): void
     {
-        $this->timeRegisters = $this->getTimeRegisters(Carbon::parse($date));
+        $this->date = Carbon::parse($date);
+
+        $this->setTimeRegisters();
+
         $this->emitSelf('$refresh');
     }
 
-    private function getTimeRegisters(Carbon $date): Collection
+    public function setTimeRegisters(): void
     {
-        return TimeRegister::query()
+        $this->timeRegisters = TimeRegister::query()
             ->fromUser()
-            ->fromDate($date)
-            ->get();
+            ->fromDate($this->date)
+            ->orderBy('start_time')
+            ->select('description', 'start_time', 'end_time', 'duration', 'id')
+            ->get()
+            ->mapWithKeys(function (TimeRegister $timeRegister) {
+                return [
+                    $timeRegister->id => [
+                        'description' => $timeRegister->description,
+                        'start_time'  => $timeRegister->start_time->format('H:i:s'),
+                        'end_time'    => $timeRegister->end_time?->format('H:i:s') ?? '00:00:00',
+                        'duration'    => $timeRegister->duration?->format('H:i:s') ?? '00:00:00',
+                    ],
+                ];
+            })
+            ->toArray();
     }
 
     public function render(): View

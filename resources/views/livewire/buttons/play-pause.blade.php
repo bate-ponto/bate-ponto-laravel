@@ -1,4 +1,12 @@
-<button class="text-blue-500 bg-blue-300 h-12 m-3 rounded-full hover:scale-105" wire:click="toggle">
+<button
+    @class([
+        'text-blue-500 bg-blue-300 h-12 m-3',
+        'rounded-full hover:scale-105',
+        'disabled:hover:scale-100  disabled:bg-blue-300'
+    ])
+    wire:click="toggle"
+    @disabled(today()->ne($date))
+>
     @if ($isPlaying)
         <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"

@@ -530,6 +530,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-\[98\%\] {
   width: 98%;
 }
+.max-w-\[5rem\] {
+  max-width: 5rem;
+}
 .cursor-pointer {
   cursor: pointer;
 }
@@ -663,6 +666,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pr-\[50px\] {
   padding-right: 50px;
 }
+.text-center {
+  text-align: center;
+}
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -786,6 +792,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 .focus\:ring-blue-200:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(191 219 254 / var(--tw-ring-opacity));
+}
+
+.disabled\:bg-blue-300:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(147 197 253 / var(--tw-bg-opacity));
+}
+
+.disabled\:text-blue-300:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(147 197 253 / var(--tw-text-opacity));
+}
+
+.disabled\:hover\:scale-100:hover:disabled {
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 768px) {

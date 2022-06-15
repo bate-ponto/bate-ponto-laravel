@@ -11,25 +11,31 @@ class DayTime extends Component
 {
     public int $timeMade = 0;
 
+    public Carbon $date;
+
     protected $listeners = [
+        'changeStatus'  => 'setTimeAlreadyMade',
         'date::changed' => 'dateChanged',
     ];
 
     public function mount(): void
     {
-        $this->timeMade = $this->getTimeAlreadyMade(today());
+        $this->date = today();
+
+        $this->setTimeAlreadyMade();
     }
 
     public function dateChanged(string $date): void
     {
-        $this->timeMade = $this->getTimeAlreadyMade(Carbon::parse($date));
+        $this->date = Carbon::parse($date);
+        $this->setTimeAlreadyMade();
     }
 
-    private function getTimeAlreadyMade(Carbon $date): int
+    public function setTimeAlreadyMade(): void
     {
-        return TimeRegister::query()
+        $this->timeMade = TimeRegister::query()
             ->fromUser()
-            ->fromDate($date)
+            ->fromDate($this->date)
             ->selectRaw('TIMESTAMPDIFF(SECOND, start_time, end_time) as time')
             ->get()
             ->sum('time');
