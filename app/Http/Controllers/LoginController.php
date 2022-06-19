@@ -16,6 +16,6 @@ class LoginController extends Controller
 
         session()->regenerateToken();
 
-        return redirect('/');
+        return redirect(route('login'));
     }
 }
