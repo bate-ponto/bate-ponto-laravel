@@ -14,24 +14,26 @@ class TimeRegister extends Model
         'description',
         'start_time',
         'end_time',
-        'duration',
         'user_id',
     ];
 
     protected $casts = [
         'start_time' => 'datetime',
         'end_time'   => 'datetime',
-        'duration'   => 'datetime',
     ];
+
+    public function getDurationAttribute(): ?int
+    {
+        if (!$this->end_time) {
+            return null;
+        }
+
+        return $this->end_time->diffInSeconds($this->start_time);
+    }
 
     public function scopeFromUser(Builder $query): Builder
     {
         return $query->where('user_id', auth()->id());
-    }
-
-    public function scopeFromToday(Builder $query): Builder
-    {
-        return $query->whereDate('start_time', today());
     }
 
     public function scopeFromDate(Builder $query, Carbon $date): Builder

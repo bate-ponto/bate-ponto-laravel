@@ -53,7 +53,7 @@ class TimeContainer extends Component
             ->fromUser()
             ->fromDate($this->date)
             ->orderBy('start_time')
-            ->select('description', 'start_time', 'end_time', 'duration', 'id')
+            ->select('description', 'start_time', 'end_time', 'id')
             ->get()
             ->mapWithKeys(function (TimeRegister $timeRegister) {
                 return [
@@ -61,7 +61,7 @@ class TimeContainer extends Component
                         'description' => $timeRegister->description,
                         'start_time'  => $timeRegister->start_time->format('H:i:s'),
                         'end_time'    => $timeRegister->end_time?->format('H:i:s') ?? '00:00:00',
-                        'duration'    => $timeRegister->duration?->format('H:i:s') ?? '00:00:00',
+                        'duration'    => convertNumberIntoTimeFormat($timeRegister->duration ?? 0),
                     ],
                 ];
             })
