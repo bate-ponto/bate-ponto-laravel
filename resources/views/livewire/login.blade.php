@@ -25,6 +25,7 @@
             />
 
             <x-error name="username" />
+            <x-error name="invalidCredentials" />
         </div>
 
         <div class="flex flex-col">

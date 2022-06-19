@@ -1,8 +1,8 @@
 <button
     @class([
-        'text-blue-500 bg-blue-300 h-12 m-3',
+        'text-blue-500 bg-blue-300 h-12 my-3',
         'rounded-full hover:scale-105',
-        'disabled:hover:scale-100  disabled:bg-blue-300'
+        'disabled:hover:scale-100 disabled:bg-gray-300'
     ])
     wire:click="toggle"
     @disabled(today()->ne($date))
