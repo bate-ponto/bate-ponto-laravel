@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', Pages\Index::class)->name('index');
+    Route::get('user', Pages\UserSettings::class)->name('user');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
