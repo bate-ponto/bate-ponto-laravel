@@ -1,6 +1,7 @@
 <div
     wire:poll
-    class="flex items-center text-blue-200 text-lg"
+    class="flex flex-col items-center"
 >
-    <span>{{ convertNumberIntoTimeFormat($timeMade) }}</span>
+    <span class="text-base">Day Time</span>
+    <span class="text-lg">{{ convertNumberIntoTimeFormat($timeMade) }}</span>
 </div>
