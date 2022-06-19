@@ -40,7 +40,7 @@ class Login extends Component
         }
 
         $this->addError(
-            'username',
+            'invalidCredentials',
             'The provided credentials do not match our records.'
         );
     }
