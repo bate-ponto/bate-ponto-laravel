@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -28,7 +30,7 @@ class UserSettings extends Component
         $this->user = auth()->user();
     }
 
-    public function submit(): void
+    public function submit(): Redirector|RedirectResponse
     {
         $this->resetValidation();
 
@@ -39,6 +41,8 @@ class UserSettings extends Component
         }
 
         $this->user->save();
+
+        return redirect()->route('index');
     }
 
     protected function rules(): array
